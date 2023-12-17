@@ -1,0 +1,18 @@
+"""
+https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/?envType=study-plan-v2&envId=top-sql-50
+
+Write a solution to find the IDs of the users who visited without making any transactions and the number of times they
+made these types of visits.
+Return the result table sorted in any order.
+"""
+
+-- Write your PostgreSQL query statement below
+
+---select Visits.customer_id, COUNT(Visits.customer_id) as count_no_trans from Visits where Visits.visit_id NOT in (Select Transactions.visit_id from Transactions)
+---group by Visits.customer_id
+
+---Did not know that we can add the null clause to a query to filter for records which do not match
+select Visits.customer_id, COUNT(Visits.customer_id) as count_no_trans from Visits LEFT Join Transactions on Visits.visit_id = Transactions.visit_id
+Where Transactions.visit_id is NULL
+group by Visits.customer_id
+
